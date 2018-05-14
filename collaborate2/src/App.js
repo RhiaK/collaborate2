@@ -18,7 +18,7 @@ class App extends Component {
 
   render() {
   	console.log(firebase);
- 	const firebaseRef = firebase.database().ref();
+ 	const firebaseRef = firebase.database();
     return (
       <ThreadDisplay db={firebaseRef}/>
     )

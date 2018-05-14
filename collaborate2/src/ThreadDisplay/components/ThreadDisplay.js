@@ -3,27 +3,37 @@ import Post from '../../Post/components/Post';
 import PostEditor from '../../PostEditor/components/PostEditor';
 
 
+
 class ThreadDisplay extends Component {
 constructor(props) {
     super(props);
 
     this.addPost = this.addPost.bind(this);
+	// console.log(postBodyRef);
     
 
     this.state = {
       posts: [],
     }
+	console.log(this.props.db);
+  }
+
+  componentWillMount() {
+    this.props.db.ref().on('child_added', snapshot => {
+    	const myPosts = snapshot.val();	
+      	this.setState({posts: [myPosts].concat(this.state.posts)});
+      	console.log(myPosts);
+    });
   }
 
   addPost(newPostBody){
     const newState = Object.assign({}, this.state);
     newState.posts.push(newPostBody);
-    this.props.db.push().set(newPostBody);
+    this.props.db.ref().push().set(newPostBody);
     this.setState(newState);
   }
 
 render(){
-	console.log(this.props.db);
 	return (
 	    <div>
 	        {this.state.posts.map((postBody, index) => {
