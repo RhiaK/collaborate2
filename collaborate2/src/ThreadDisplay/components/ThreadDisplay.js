@@ -18,10 +18,12 @@ constructor(props) {
   addPost(newPostBody){
     const newState = Object.assign({}, this.state);
     newState.posts.push(newPostBody);
+    this.props.db.push().set(newPostBody);
     this.setState(newState);
   }
 
 render(){
+	console.log(this.props.db);
 	return (
 	    <div>
 	        {this.state.posts.map((postBody, index) => {
